@@ -2,9 +2,8 @@ const express = require("express")
 const collectionRouter = express.Router();
 const Collection = require("../models/collection");
 const Product = require("../models/Products");
-const {userAuth} = require("../middlewares/auth");
 
-collectionRouter.get("/collections", userAuth ,async (req, res) => {
+collectionRouter.get("/collections", async (req, res) => {
     try{
         const collections = await Collection.find().sort({name: 1})
         res.json({success: true, data: collections})
@@ -14,7 +13,7 @@ collectionRouter.get("/collections", userAuth ,async (req, res) => {
     }
 })
 
-collectionRouter.get("/collections/:slug", userAuth ,async (req, res) => {
+collectionRouter.get("/collections/:slug", async (req, res) => {
     try{
         const slug = req.params.slug;
         const collection = await Collection.findOne({slug})

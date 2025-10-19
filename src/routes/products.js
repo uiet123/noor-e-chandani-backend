@@ -2,9 +2,8 @@ const express = require("express")
 const productRouter = express.Router();
 const Product = require("../models/Products");
 const Collection = require("../models/collection");
-const {userAuth} = require("../middlewares/auth");
 
-productRouter.get("/products", userAuth, async (req, res) => {
+productRouter.get("/products", async (req, res) => {
     try{
         const products = await Product.find().populate('collection', 'name slug image');
         res.json({ success: true, data: products });
@@ -13,7 +12,7 @@ productRouter.get("/products", userAuth, async (req, res) => {
     }
 })
 
-productRouter.get("/products/:id", userAuth, async (req, res) => {
+productRouter.get("/products/:id", async (req, res) => {
     try{
         const productId = req.params.id;
         const product = await Product.findById(productId).populate('collection', 'name slug image');
