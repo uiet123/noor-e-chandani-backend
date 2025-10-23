@@ -8,7 +8,7 @@ const { SignUpValidation } = require('../utils/validation');
 authRouter.post("/signup", async (req, res) => {
     try{
         SignUpValidation(req);
-        const {firstName, lastName, emailId, password, confirmPassword} = req.body;
+        const {firstName, lastName, emailId, password} = req.body;
         
     
         const passwordHash = await bcrypt.hash(password, 10)
