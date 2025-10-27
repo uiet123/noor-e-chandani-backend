@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express")
 const connectDB = require("./config/database")
 const cookieParser = require("cookie-parser")
@@ -18,10 +19,12 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads
 const authRouter = require("./routes/auth")
 const collectionRouter = require("./routes/collections")
 const productRouter = require("./routes/products")
+const paymentRouter = require("./routes/payment")
 
 app.use("/", authRouter)
 app.use("/", collectionRouter)
 app.use("/", productRouter)
+app.use("/", paymentRouter)
 
 connectDB()
 .then(() => {
