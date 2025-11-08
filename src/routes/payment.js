@@ -26,7 +26,7 @@ paymentRouter.post("/payment/create", userAuth, async (req, res) => {
       shippingCharge,
       totalAmount,
       paymentStatus: "created",
-      orderStatus: "pending",
+      orderStatus: "Pending",
     });
 
     const savedOrder = await newOrder.save();
@@ -43,7 +43,7 @@ paymentRouter.post("/payment/create", userAuth, async (req, res) => {
       },
     });
 
-    savedOrder.razorpayOrderId = order.id;
+    savedOrder.orderId = order.id;
 await savedOrder.save();
 
 
@@ -65,16 +65,22 @@ await savedOrder.save();
   }
 });
 
-paymentRouter.post("/payment/webhook", express.raw({ type: "application/json" }), async (req, res) => {
+paymentRouter.post("/payment/webhook", async (req, res) => {
     try{
-        const webhookSignature = req.get("X-Razorpay-Signature") || req.get("x-razorpay-signature");
+        const webhookSignature = req.get["X-Razorpay-Signature"] || req.get("x-razorpay-signature");
 
          if(!webhookSignature) {
              console.log("❌ Missing X-Razorpay-Signature header");
             return res.status(400).json({msg: "Signature missing"})
         }
 
-        const bodyString = req.body.toString("utf8");
+         const raw = req.rawBody;
+    if (!raw) {
+      console.log("❌ req.rawBody missing — check express.json verify config");
+      return res.status(400).json({ msg: "Raw body missing" });
+    }
+
+    const bodyString = raw.toString('utf8');
 
         const isWebhookValid =  validateWebhookSignature(bodyString, webhookSignature , process.env.RAZORPAY_WEBHOOK_SECRET);
 
@@ -83,37 +89,16 @@ paymentRouter.post("/payment/webhook", express.raw({ type: "application/json" })
         return res.status(400).json({ msg: "Invalid signature" });
         }
 
-              // ✅ Ab JSON parse karo after signature verify
-      const payload = JSON.parse(bodyString);
-      const event = payload.event;
-      const paymentEntity = payload.payload.payment.entity;
+        console.log("signature valid")
 
-      console.log("✅ Webhook received:", event, paymentEntity.id);
+        const paymentDetails = req.body.payload.payment.entity;
 
-      // Update payment status
-      const payment = await Payment.findOne({
-        orderId: paymentEntity.order_id,
-      });
-
-      if (payment) {
-        payment.status = paymentEntity.status;
-        payment.paymentId = paymentEntity.id;
-        await payment.save();
-      }
-
-      // Update order status as well
-      await Order.findOneAndUpdate(
-        { razorpayOrderId: paymentEntity.order_id },
-        {
-          paymentStatus: paymentEntity.status,
-          orderStatus:
-            event === "payment.captured"
-              ? "processing"
-              : event === "payment.failed"
-              ? "failed"
-              : "pending",
-        }
-      );
+        const payment = await Payment.findOne({orderId: paymentDetails.order_id})
+        const order = await Order.findOne({orderId: paymentDetails.order_id})
+        order.paymentStatus = paymentDetails.status
+        payment.status = paymentDetails.status
+        await order.save()
+        await payment.save()
 
       console.log(`✅ Order updated for ${paymentEntity.order_id}`);
 
@@ -122,6 +107,25 @@ paymentRouter.post("/payment/webhook", express.raw({ type: "application/json" })
     catch(err) {
         res.status(400).send(`Error: ${err.message}`)
     }
+})
+
+paymentRouter.get("/payment/status/:orderId", userAuth, async (req, res) => {
+  try{
+    const { orderId } = req.params;
+
+    const payment = await Payment.findOne({ orderId});
+    const order = await Order.findOne({orderId});
+    if(!payment || !order) {
+        return  res.status(404).json({msg: "Payment or Order not found"})
+    }
+    const status = payment.status
+
+    res.json({status})
+
+  }
+  catch(err) {
+    res.status(400).send(`Error: ${err.message}`)
+  }
 })
 
 module.exports = paymentRouter;

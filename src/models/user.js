@@ -15,19 +15,36 @@ const userSchema = mongoose.Schema({
         required: true,
         unique: true,
         lowercase: true,
-        trim: true
+        trim: true,
+        index: true
     },
-    password:{ 
+    password: {
+      type: String,
+      required: function () {
+        return this.provider === "local";
+      },
+    },
+     provider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
+    },
+    picture: {
         type: String,
-        required: true
+    },
+     role: {
+      type: String,
+      enum: ['customer', 'admin'],
+      default: 'customer',
+      index: true,
     }
 },{
-    Timestamp: true
+    timestamps: true
 })
 
 userSchema.methods.getJWT = async function () {
     const user = this;
-    const token = await jwt.sign({_id: user._id}, "NoorEChandani")
+    const token = await jwt.sign({_id: user._id}, process.env.SECRET_KEY)
     return token
 }
 
