@@ -11,7 +11,7 @@ const app = express()
 
 
 app.use(cors({
-    origin:["http://localhost:5173", "http://localhost:5174", "http://ec2-13-60-28-16.eu-north-1.compute.amazonaws.com:7777"],
+    origin:["http://localhost:5173", "http://localhost:5174", "http://ec2-13-60-28-16.eu-north-1.compute.amazonaws.com:7777", "https://noor-e-chandani.info"],
     credentials: true
 }))
 
