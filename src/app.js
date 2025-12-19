@@ -49,24 +49,20 @@ app.use("/", customCandleRouter)
 
 
 
-// admin static
-app.use(
-  "/admin",
-  express.static(path.join(__dirname, "../noor-e-chandani-admin/dist"))
+// ================= ADMIN PANEL STATIC SERVE =================
+
+const adminDistPath = path.join(
+  __dirname,
+  "../../noor-e-chandani-admin/dist"
 );
 
-// react-router fallback (NO wildcard params)
-app.use("/admin", (req, res, next) => {
-  const indexPath = path.join(
-    __dirname,
-    "../noor-e-chandani-admin/dist/index.html"
-  );
+app.use("/admin", express.static(adminDistPath));
 
-  if (fs.existsSync(indexPath)) {
-    return res.sendFile(indexPath);
-  }
-  next();
+app.use("/admin", (req, res) => {
+  res.sendFile(path.join(adminDistPath, "index.html"));
 });
+
+// ============================================================
 
 
 
