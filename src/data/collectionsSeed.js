@@ -8,27 +8,47 @@ const CollectionData = [
     products: [
       {
         name: "Rose Romance",
-        image: "/uploads/dating/rose_romance.png",
+        image: ["/uploads/dating/rose_romance/rose_romance.png", "/uploads/dating/rose_romance/1.jpg", "/uploads/dating/rose_romance/2.jpg", "/uploads/dating/rose_romance/3.jpg", "/uploads/dating/rose_romance/4.jpg"],
         description: "A floral fragrance with notes of fresh rose and vanilla.",
-        price: 200
+        price: 200,
+        materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Chocolate Delight",
-        image: "/uploads/dating/chocolate_delight.png",
+        image: ["/uploads/dating/rose_romance/rose_romance.png", "/uploads/dating/rose_romance/1.jpg", "/uploads/dating/rose_romance/2.jpg", "/uploads/dating/rose_romance/3.jpg", "/uploads/dating/rose_romance/4.jpg"],
         description: "Warm chocolate notes with a hint of sweetness, romantic ambiance.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Strawberry Kiss",
-        image: "/uploads/dating/strawberry_kiss.png",
+        image: ["/uploads/dating/rose_romance/rose_romance.png", "/uploads/dating/rose_romance/1.jpg", "/uploads/dating/rose_romance/2.jpg", "/uploads/dating/rose_romance/3.jpg", "/uploads/dating/rose_romance/4.jpg"],
         description: "Sweet and playful fragrance with strawberry tones.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Vanilla Musk",
-        image: "/uploads/dating/vanilla_musk.png",
+        image: ["/uploads/dating/rose_romance/rose_romance.png", "/uploads/dating/rose_romance/1.jpg", "/uploads/dating/rose_romance/2.jpg", "/uploads/dating/rose_romance/3.jpg", "/uploads/dating/rose_romance/4.jpg"],
         description: "A creamy vanilla base with subtle musk — comforting and romantic.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       }
     ]
   },
@@ -44,7 +64,12 @@ const CollectionData = [
         name: "Diwali Glow",
         image: "/uploads/festival_collection/diwali_glow.png",
         description: "Crafted for the festival of lights.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Holi Fruity",
@@ -56,19 +81,34 @@ const CollectionData = [
         name: "Christmas Cheer",
         image: "/uploads/festival_collection/christmas_cheer.png",
         description: "Wrapping you in the joy of Christmas.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Eid Rose",
         image: "/uploads/festival_collection/eid_rose.png",
         description: "Perfect for the spirit of togetherness during Eid.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "New Year",
         image: "/uploads/festival_collection/new_year.png",
         description: "Welcome the New Year with elegance.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       }
     ]
   },
@@ -84,31 +124,56 @@ const CollectionData = [
         name: "Eucalyptus Freshness",
         image: "/uploads/wellness/eucalyptus_freshness.png",
         description: "Cool eucalyptus with a minty touch — refreshing your senses.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Lavender Calm",
         image: "/uploads/wellness/lavender_calm_jar.png",
         description: "Soothing lavender blended with soft herbs — crafted to relax your mind.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Lemongrass Uplift",
         image: "/uploads/wellness/lemongrass_uplift.png",
         description: "Bright lemongrass with citrusy notes — uplifting your mood.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Ocean Breeze",
         image: "/uploads/wellness/ocean_breeze.png",
         description: "A crisp aquatic blend inspired by sea waves — calming and refreshing.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Sandalwood Serenity",
         image: "/uploads/wellness/sandalwood_serenity.png",
         description: "Earthy sandalwood with subtle musk — grounding and peaceful.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       }
     ]
   },
@@ -124,31 +189,56 @@ const CollectionData = [
         name: "Plain Pillar",
         image: "/uploads/everday_essentials/plain_pillar_candle.png",
         description: "A sophisticated candle set crafted for elegance.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Tealight Candles Scented",
         image: "/uploads/everday_essentials/tealight_candles_scented.png",
         description: "A romantic duo of candles, symbolizing togetherness.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Tealight Candles Unscented",
         image: "/uploads/everday_essentials/tealight_candles_unscented.png",
         description: "Perfect for daily use and festive decorations.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Votive Candles",
         image: "/uploads/everday_essentials/votive_candles.png",
         description: "An indulgent set of premium candles curated to elevate daily rituals.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       },
       {
         name: "Wax Melts",
         image: "/uploads/everday_essentials/wax_melts.png",
         description: "Three charming mini jars — compact and cozy.",
-        price: 200
+        price: 200,
+            materialUsed:"Soya Wax",
+        fragranceType:"Scented",
+        scentName:"Rose Mary",
+        burnTime:"1 hour",
+        weight: "400 g"
       }
     ]
   },

@@ -3,7 +3,7 @@ require('dotenv').config();
 const  connectDB  = require('../config/database');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const User = require('../models/user'); // path adjust karo
+const User = require('../models/user'); 
 
 async function run() {
   try {

@@ -1,43 +1,52 @@
-const mongoose = require('mongoose');
-const connectDB = require('../config/database');
-const Collection = require('../models/collection');
-const Product = require('../models/Products');
-const collections = require('../data/collectionsSeed');
+require('dotenv').config();
+const mongoose = require("mongoose");
+const connectDB = require("../config/database");
+const Collection = require("../models/collection");
+const Product = require("../models/Products");
+const collections = require("../data/collectionsSeed");
 
 async function seed() {
-    try{
-        await connectDB();
-        await Product.deleteMany({});
+  try {
+    await connectDB();
+    await Product.deleteMany({});
     await Collection.deleteMany({});
 
-        for (const col of collections) {
+    for (const col of collections) {
       const { slug, name, description, image, products = [] } = col;
-      const newCol = await Collection.create({ slug, name, description, image });
+      const newCol = await Collection.create({
+        slug,
+        name,
+        description,
+        image,
+      });
       console.log(`Created collection ${newCol.slug}`);
 
-       if (products.length) {
-        const docs = products.map(p => ({
+      if (products.length) {
+        const docs = products.map((p) => ({
           name: p.name,
-          description: p.description || '',
+          description: p.description || "",
           price: p.price || 0,
           category: p.category || name,
-          image: p.image || '',
+          image: p.image || [],
           stock: p.stock || 50,
-          collection: newCol._id
+          collection: newCol._id,
+          materialUsed: p.materialUsed || "",
+          fragranceType: p.fragranceType,
+          scentName: p.scentName || "",
+          burnTime: p.burnTime || "",
+          weight: p.weight || "",
         }));
 
         await Product.insertMany(docs);
         console.log(`Inserted ${docs.length} products for ${newCol.slug}`);
       }
-
-   
-        }
-         console.log('All collections and products seed completed');
-    process.exit(0);
-    } catch(err){
-         console.error('Seed error', err);
-    process.exit(1);
     }
+    console.log("All collections and products seed completed");
+    process.exit(0);
+  } catch (err) {
+    console.error("Seed error", err);
+    process.exit(1);
+  }
 }
 
-seed()
+seed();

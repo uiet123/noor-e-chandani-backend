@@ -8,19 +8,38 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     orderId: { type: String },
-   
     items: [
       {
         productId: {
           type: mongoose.Types.ObjectId,
           ref: "Product",
-          required: true,
+          required: false,
         },
         name: String,
         price: Number,
+        color: String,
         quantity: Number,
         image: String,
+
+         customDetails: {
+          isCustom: { type: Boolean, default: false },
+
+          glassType: { type: String, default: "" },
+          waxType: { type: String, default: "" },
+
+          messageType: { type: String, default: "" }, 
+          messageText: { type: String, default: "" },
+
+          layers: { type: String, default: "" },
+          layer1Color: { type: String, default: "" },
+          layer2Color: { type: String, default: "" },
+
+          fragrance: { type: String, default: "" },
+
+          customPrice: { type: Number, default: 0 },
+        }
       },
+      
     ],
 
     shippingAddress: {
@@ -36,9 +55,6 @@ const orderSchema = new mongoose.Schema(
     subtotal: { type: Number, required: true },
     shippingCharge: { type: Number, default: 0 },
     totalAmount: { type: Number, required: true },
-
-    // Razorpay-related details
-    
     razorpayPaymentId: { type: String },
     razorpaySignature: { type: String },
 

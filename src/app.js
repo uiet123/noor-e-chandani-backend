@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require("express")
 const connectDB = require("./config/database")
 const cookieParser = require("cookie-parser")
+const fs = require("fs")
 const path = require("path");
 const cors = require("cors")
 
@@ -10,7 +11,7 @@ const app = express()
 
 
 app.use(cors({
-    origin:["http://localhost:5173", "http://localhost:5174"],
+    origin:["http://localhost:5173", "http://localhost:5174", "http://ec2-13-60-28-16.eu-north-1.compute.amazonaws.com:7777"],
     credentials: true
 }))
 
@@ -31,6 +32,9 @@ const collectionRouter = require("./routes/collections")
 const productRouter = require("./routes/products")
 const paymentRouter = require("./routes/payment")
 const adminRouter = require("./routes/admin")
+const reviewRouter = require("./routes/review")
+const couponRouter = require("./routes/coupon")
+const customCandleRouter = require("./routes/customCandle")
 
 
 app.use("/", authRouter)
@@ -38,6 +42,34 @@ app.use("/", collectionRouter)
 app.use("/", productRouter)
 app.use("/", paymentRouter)
 app.use("/", adminRouter)
+app.use("/", reviewRouter)
+app.use("/", couponRouter)
+app.use("/", customCandleRouter)
+
+
+
+
+// admin static
+app.use(
+  "/admin",
+  express.static(path.join(__dirname, "../noor-e-chandani-admin/dist"))
+);
+
+// react-router fallback (NO wildcard params)
+app.use("/admin", (req, res, next) => {
+  const indexPath = path.join(
+    __dirname,
+    "../noor-e-chandani-admin/dist/index.html"
+  );
+
+  if (fs.existsSync(indexPath)) {
+    return res.sendFile(indexPath);
+  }
+  next();
+});
+
+
+
 
 connectDB()
 .then(() => {

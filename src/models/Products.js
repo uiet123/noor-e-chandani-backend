@@ -5,21 +5,47 @@ const productSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   description: String,
   price: { type: Number, required: true },
+  actualPrice: { type: Number },
   category: String,
-  image: { type: String, required: true },
+  image: [{ type: String, required: true }],
   stock: { type: Number, default: 10 },
+  materialUsed: {
+    type: String,
+    trim: true,
+  },
 
-  // Strong link to Collection model:
+  fragranceType: {
+    type: String,
+    enum: ["Scented", "Non-Scented"],
+    default: "Scented"
+  },
+
+  scentName: {
+    type: String,
+    trim: true, 
+  },
+
+  burnTime: {
+    type: String, 
+    default: 0
+  },
+
+  weight: {
+    type: String, 
+    default: 0
+  },
+
+
+  
   collection: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Collection',
     index: true
   },
-
+  reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
   createdAt: { type: Date, default: Date.now }
 });
 
-// text index if you later want search by name/description
 productSchema.index({ name: 'text', description: 'text' });
 
 const Product = mongoose.model('Product', productSchema);
