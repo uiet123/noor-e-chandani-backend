@@ -108,7 +108,7 @@ reviewRouter.get("/reviews/:productId", async (req, res) => {
 
 reviewRouter.post(
   "/orders/:orderId/products/:orderItemId/review",
-  userAuth, uploadReviewImages.array("images", 5),
+  userAuth, uploadReviewImages.array("images", 3),
   async (req, res) => {
     try {
       const { orderId, orderItemId } = req.params;

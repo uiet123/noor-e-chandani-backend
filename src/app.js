@@ -10,15 +10,20 @@ const cors = require("cors")
 const app = express()
 
 
+
+
 app.use(cors({
     origin:["http://localhost:5173", "http://localhost:5174", "http://ec2-13-60-28-16.eu-north-1.compute.amazonaws.com:7777", "https://noor-e-chandani.info"],
     credentials: true
 }))
 
+app.use(express.urlencoded({ extended: true, limit: "20mb" }));
+
 app.use(express.json({
+    limit: "20mb",
   verify: (req, res, buf) => {
     if (buf && buf.length) {
-      // store exact raw bytes so webhook route can verify signature
+      
       req.rawBody = Buffer.from(buf);
     }
   }
@@ -77,4 +82,3 @@ connectDB()
 .catch((err) => {
     console.error("Database cannot be connected" + err.message)
 })
-

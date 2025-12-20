@@ -32,8 +32,17 @@ const productStorage = multer.diskStorage({
   },
 });
 
- const uploadReviewImages = multer({ storage });
- const uploadProductImages = multer({ storage: productStorage})
- const uploadCollectionImages = multer({ storage: collectionStorage });
+ const uploadReviewImages = multer({storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 
+  }});
+ const uploadProductImages = multer({ storage: productStorage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 
+  }})
+ const uploadCollectionImages = multer({ storage: collectionStorage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 
+  } });
  module.exports = { uploadReviewImages, uploadProductImages, uploadCollectionImages }
 
