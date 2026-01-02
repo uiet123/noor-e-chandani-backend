@@ -87,6 +87,43 @@ productRouter.post(
   }
 );
 
+
+productRouter.patch(
+  "/adminEdit/updateProduct/:id",
+  uploadProductImages.array("image", 10),
+  async (req, res) => {
+    try {
+      const updates = req.body;
+
+      if (req.files && req.files.length > 0) {
+        updates.image = req.files.map(
+          (file) => "/uploads/products/" + file.filename
+        );
+      }
+
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        updates,
+        { new: true }
+      );
+
+      res.json({
+        success: true,
+        message: "Product updated successfully",
+        data: updatedProduct,
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: "Update failed",
+        error: err.message,
+      });
+    }
+  }
+);
+
+
+
 productRouter.post("/admin/deleteProduct", async(req, res) => {
     try{
         const { id } = req.body;

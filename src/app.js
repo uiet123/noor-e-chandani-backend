@@ -6,11 +6,7 @@ const fs = require("fs")
 const path = require("path");
 const cors = require("cors")
 
-
 const app = express()
-
-
-
 
 app.use(cors({
     origin:["http://localhost:5173", "http://localhost:5174", "http://ec2-13-60-28-16.eu-north-1.compute.amazonaws.com:7777", "https://noor-e-chandani.info"],
@@ -31,6 +27,7 @@ app.use(express.json({
 
 app.use(cookieParser())
 app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads')));
+
 
 const authRouter = require("./routes/auth")
 const collectionRouter = require("./routes/collections")

@@ -45,7 +45,7 @@ customCandleRouter.post("/custom-candle", (req, res) => {
     if (!glassType || !waxType || !layers) {
       return res.status(400).json({
         success: false,
-        message: "Please select all required fields."
+        message: "Please select all the required fields"
       });
     }
 
