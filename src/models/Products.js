@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema({
   fragranceType: {
     type: String,
     enum: ["Scented", "Non-Scented"],
-    default: "Scented"
+    default: "Non-Scented"
   },
 
   scentName: {
@@ -35,7 +35,28 @@ const productSchema = new mongoose.Schema({
     default: 0
   },
 
+  customizationType: {
+  type: String,
+  enum: ["ADMIN_DEFINED", "USER_DEFINED"],
+  default: "ADMIN_DEFINED",
+},
+fixedColor: {
+  type: String,
+},
 
+fixedFragrance: {
+  type: String,
+},
+
+availableColors: {
+  type: [String],
+  default: [],
+},
+
+availableFragrances: {
+  type: [String],
+  default: [],
+},
   
   collection: {
     type: mongoose.Schema.Types.ObjectId,

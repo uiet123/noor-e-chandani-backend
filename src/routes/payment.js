@@ -18,9 +18,32 @@ paymentRouter.post("/payment/create", userAuth, async (req, res) => {
       return res.status(400).json({ error: "Invalid total amount" });
     }
 
+    const normalizedItems = items.map((item) => ({
+  productId: item.productId,
+  name: item.name,
+  price: item.price,
+  quantity: item.quantity,
+  image: item.image,
+
+  // ✅ NORMAL PRODUCT
+  color: item.color || null,
+  fragrance: item.isCustom ? null : item.fragrance || null,
+
+  // ✅ CUSTOM PRODUCT
+  customDetails: item.isCustom
+    ? {
+        ...item.customDetails,
+        fragrance: item.customDetails?.fragrance || "",
+      }
+    : {
+        isCustom: false,
+      },
+}));
+
+
     const newOrder = new Order({
       userId: req.user._id,
-      items,
+      items: normalizedItems,
       shippingAddress,
       subtotal,
       shippingCharge,

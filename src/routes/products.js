@@ -51,7 +51,45 @@ productRouter.post(
         weight,
         stock,
         collection,
+
+          customizationType,
+  fixedColor,
+  fixedFragrance,
+  availableColors,
+  availableFragrances,
       } = req.body;
+
+
+      // 🧠 Normalize arrays (FormData string issue)
+const parsedAvailableColors =
+  typeof availableColors === "string"
+    ? availableColors.split(",")
+    : availableColors || [];
+
+const parsedAvailableFragrances =
+  typeof availableFragrances === "string"
+    ? availableFragrances.split(",")
+    : availableFragrances || [];
+
+// 🔒 VALIDATION RULES
+if (customizationType === "ADMIN_DEFINED") {
+  if (!fixedColor) {
+    return res.status(400).json({
+      success: false,
+      message: "Fixed color is required for admin defined product",
+    });
+  }
+}
+
+if (customizationType === "USER_DEFINED") {
+  if (!parsedAvailableColors || parsedAvailableColors.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: "Available colors are required for user defined product",
+    });
+  }
+}
+
 
       const images = req.files.map(
         (file) => "/uploads/products/" + file.filename
@@ -70,6 +108,19 @@ productRouter.post(
         stock,
         collection,
         image: images,
+         customizationType,
+
+  fixedColor:
+    customizationType === "ADMIN_DEFINED" ? fixedColor : null,
+
+  fixedFragrance:
+    customizationType === "ADMIN_DEFINED" ? fixedFragrance : null,
+
+  availableColors:
+    customizationType === "USER_DEFINED" ? parsedAvailableColors : [],
+
+  availableFragrances:
+    customizationType === "USER_DEFINED" ? parsedAvailableFragrances : [],
       });
 
       res.status(201).json({
@@ -93,7 +144,39 @@ productRouter.patch(
   uploadProductImages.array("image", 10),
   async (req, res) => {
     try {
-      const updates = req.body;
+      const updates = { ...req.body };
+
+// 🧠 HANDLE customization logic
+if (updates.customizationType === "ADMIN_DEFINED") {
+  updates.availableColors = [];
+  updates.availableFragrances = [];
+} 
+
+if (updates.customizationType === "USER_DEFINED") {
+  updates.fixedColor = "";
+  updates.fixedFragrance = "";
+}
+
+
+// 🧹 STRING → ARRAY CONVERSION (from FormData)
+if (updates.availableColors && typeof updates.availableColors === "string") {
+  updates.availableColors = updates.availableColors
+    .split(",")
+    .map((c) => c.trim())
+    .filter(Boolean);
+}
+
+if (
+  updates.availableFragrances &&
+  typeof updates.availableFragrances === "string"
+) {
+  updates.availableFragrances = updates.availableFragrances
+    .split(",")
+    .map((f) => f.trim())
+    .filter(Boolean);
+}
+
+
 
       if (req.files && req.files.length > 0) {
         updates.image = req.files.map(

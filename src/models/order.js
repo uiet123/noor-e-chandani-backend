@@ -18,6 +18,7 @@ const orderSchema = new mongoose.Schema(
         name: String,
         price: Number,
         color: String,
+        fragrance: String,
         quantity: Number,
         image: String,
 
