@@ -14,11 +14,7 @@ const productSchema = new mongoose.Schema({
     trim: true,
   },
 
-  fragranceType: {
-    type: String,
-    enum: ["Scented", "Non-Scented"],
-    default: "Non-Scented"
-  },
+
 
   scentName: {
     type: String,
